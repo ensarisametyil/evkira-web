@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EvKira - Profesyonel Ev Kiralama Platformu" />
+  <title>EvKira - Modern Ev Kiralama</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- AOS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <!-- Swiper -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.4.1/swiper-bundle.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --primary-dark: #5649c0;
+      --secondary: #a29bfe;
+      --dark: #121212;
+      --darker: #0a0a0a;
+      --gray: #343a40;
+      --light: #f8f9fa;
+      --light-gray: #e9ecef;
+      --success: #00b894;
+      --warning: #fdcb6e;
+      --danger: #d63031;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .navbar.scrolled {
+      padding: 0.5rem 1rem;
+      background-color: rgba(0, 0, 0, 0.98);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: var(--primary);
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand i {
+      margin-right: 10px;
+    }
+
+    .nav-link {
+      color: var(--light);
+      font-weight: 500;
+      margin-right: 15px;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      left: 0;
+      bottom: -5px;
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary);
+    }
+
+    .hero {
+      height: 100vh;
+      min-height: 700px;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(transparent, var(--dark));
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-top: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      border: none;
+      padding: 12px 25px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+    }
+
+    .btn-outline-primary {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline-primary:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .search-box {
+      background-color: rgba(18,18,18,0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+
+    .search-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    }
+
+    .form-control {
+      background-color: var(--gray);
+      color: var(--light);
+      border: none;
+      padding: 12px 15px;
+      transition: all 0.3s;
+    }
+
+    .form-control:focus {
+      background-color: var(--gray);
+      color: var(--light);
+      box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+    }
+
+    .form-control::placeholder {
+      color: #ccc;
+    }
+
+    .search-btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .search-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .modal-content {
+      background-color: #1e1e1e;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .modal-footer {
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Öne Çıkan Konutlar */
+    .property-card {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+      background-color: var(--darker);
+      height: 100%;
+    }
+
+    .property-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .property-card .card-img-top {
+      height: 220px;
+      object-fit: cover;
+      transition: all 0.5s;
+    }
+
+    .property-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    .property-card .card-body {
+      padding: 1.5rem;
+    }
+
+    .property-card .card-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .property-card .card-text {
+      color: var(--light-gray);
+      font-size: 0.9rem;
+    }
+
+    .property-card .price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .property-card .badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 5px 10px;
+      font-weight: 500;
+    }
+
+    .property-card .features {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .property-card .features span {
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .property-card .features i {
+      margin-right: 5px;
+      color: var(--primary);
+    }
+
+    /* Nasıl Çalışır */
+    .how-it-works .step {
+      padding: 2rem;
+      border-radius: 12px;
+      height: 100%;
+      transition: all 0.3s;
+      background-color: var(--darker);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .how-it-works .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      border-color: rgba(108, 92, 231, 0.3);
+    }
+
+    .how-it-works .step-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    /* Yorumlar */
+    .testimonial-slide {
+      padding: 2rem;
+      border-radius: 12px;
+      background-color: var(--darker);
+      border: 1px solid rgba(255,255,255,0.05);
+      height: 100%;
+    }
+
+    .testimonial-slide p {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-slide .author {
+      display: flex;
+      align-items: center;
+    }
+
+    .testimonial-slide .author img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 15px;
+      border: 2px solid var(--primary);
+    }
+
+    .testimonial-slide .author-info h6 {
+      margin-bottom: 0;
+      font-weight: 600;
+    }
+
+    .testimonial-slide .author-info small {
+      color: var(--light-gray);
+      font-size: 0.8rem;
+    }
+
+    /* CTA */
+    .cta-section {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 300px;
+      height: 300px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+
+    .cta-section h2 {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-section p {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--darker);
+      padding: 5rem 0 2rem;
+    }
+
+    .footer-links h5 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--light-gray);
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .footer-contact i {
+      width: 20px;
+      color: var(--primary);
+      margin-right: 10px;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: white;
+      margin-right: 10px;
+      transition: all 0.3s;
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    /* Animasyonlar */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        height: auto;
+        padding: 120px 0 80px;
+        min-height: auto;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .search-box {
+        margin-top: 2rem;
+      }
+    }
+
+    /* Ekstra Özellikler */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-to-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    /* Filtreler */
+    .filter-section {
+      background-color: var(--darker);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+    }
+
+    .filter-section h5 {
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .filter-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-group h6 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--light-gray);
+      margin-bottom: 0.8rem;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-option {
+      padding: 0.5rem 1rem;
+      background-color: var(--gray);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-option:hover, .filter-option.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    /* Detay Sayfası Benzeri Kart */
+    .property-detail-card {
+      background-color: var(--darker);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .property-detail-card .main-image {
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .property-detail-card .thumbnails {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .property-detail-card .thumbnail {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .property-detail-card .thumbnail:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    .property-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .property-highlight {
+      display: flex;
+      align-items: center;
+      background-color: rgba(108, 92, 231, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+    }
+
+    .property-highlight i {
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .amenities-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .amenity-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .amenity-item i {
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    /* Harita */
+    .map-container {
+      height: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 2rem;
+      background-color: var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--light-gray);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-home"></i> EvKira
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Ana Sayfa</a></li>
+        <li class="nav-item"><a class="nav-link" href="#featured">Konutlar</a></li>
+        <li class="nav-item"><a class="nav-link" href="#how-it-works">Nasıl Çalışır?</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Yorumlar</a></li>
+        <li class="nav-item"><a class="nav-link" href="#iletisim">İletişim</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="fas fa-user-circle me-1"></i> Hesabım
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Giriş Yap</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Kayıt Ol</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Favorilerim</a></li>
+            <li><a class="dropdown-item" href="#">İlanlarım</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="btn btn-primary ms-lg-3 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#propertyModal">
+            <i class="fas fa-plus me-1"></i> İlan Ver
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero text-light">
+  <div class="container hero-content">
+    <div class="row align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <h1>Hayalinizdeki Evi <span class="text-primary">Keşfedin</span></h1>
+        <p>Binlerce ilan arasında en uygun olanı bulun. Hızlı, kolay ve güvenli kiralama için EvKira'yı tercih edin.</p>
+        <div class="d-flex gap-3 mt-4">
+          <a href="#featured" class="btn btn-primary btn-lg">
+            <i class="fas fa-search me-2"></i> Konutları Gör
+          </a>
+          <a href="#how-it-works" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-play-circle me-2"></i> Nasıl Çalışır?
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
+        <div class="search-box">
+          <h5 class="mb-4">Arama Yap</h5>
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Konum (örn: İstanbul, Kadıköy)" />
+            </div>
+            <div class="row g-2">
+              <div class="col-md-6 mb-3">
+                <select class="form-control">
+                  <option>Konut Tipi</option>
+                  <option>Daire</option>
+                  <option>Villa</option>
+                  <option>Stüdyo</option>
+                  <option>Müstakil Ev</option>
+                  <option>Residence</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <select class="form-control">
+                  <option>Oda Sayısı</option>
+                  <option>1+1</option>
+                  <option>2+1</option>
+                  <option>3+1</option>
+                  <option>4+1</option>
+                  <option>5+1</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <select class="form-control">
+                <option>Bütçe</option>
+                <option>₺2.000 - ₺5.000</option>
+                <option>₺5.000 - ₺10.000</option>
+                <option>₺10.000 - ₺20.000</option>
+                <option>₺20.000+</option>
+              </select>
+            </div>
+            <button class="search-btn w-100">
+              <i class="fas fa-search me-2"></i> 5.324 Konut Arasından Ara
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Öne Çıkan Konutlar -->
+<section id="featured" class="py-5 bg-dark">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h2 class="text-light" data-aos="fade-up">Öne Çıkan Konutlar</h2>
+      <a href="#" class="btn btn-outline-light" data-aos="fade-up" data-aos-delay="100">Tümünü Gör <i class="fas fa-arrow-right ms-2"></i></a>
+    </div>
+    <div class="row g-4">
+      <!-- Kart 1 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="property-card">
+          <span class="badge bg-success">Yeni</span>
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Modern Daire">
+          <div class="card-body">
+            <h5 class="card-title">Modern Daire</h5>
+            <p class="card-text"><i class="fas fa-map-marker-alt text-primary me-1"></i> Kadıköy, İstanbul</p>
+            <div class="features">
+              <span><i class="fas fa-bed"></i> 2+1</span>
+              <span><i class="fas fa-vector-square"></i> 110 m²</span>
+              <span><i class="fas fa-bath"></i> 2</span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+            <span class="price">₺12.000/ay</span>
+            <div>
+              <button class="btn btn-sm btn-outline-light me-2"><i class="far fa-heart"></i></button>
+              <a href="#" class="btn btn-sm btn-primary">Detaylar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kart 2 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="property-card">
+          <span class="badge bg-primary">Popüler</span>
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Deniz Manzaralı Villa">
+          <div class="card-body">
+            <h5 class="card-title">Deniz Manzaralı Villa</h5>
+            <p class="card-text"><i class="fas fa-map-marker-alt text-primary me-1"></i> Çeşme, İzmir</p>
+            <div class="features">
+              <span><i class="fas fa-bed"></i> 4+1</span>
+              <span><i class="fas fa-vector-square"></i> 240 m²</span>
+              <span><i class="fas fa-bath"></i> 3</span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+            <span class="price">₺28.500/ay</span>
+            <div>
+              <button class="btn btn-sm btn-outline-light me-2"><i class="far fa-heart"></i></button>
+              <a href="#" class="btn btn-sm btn-primary">Detaylar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kart 3 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="property-card">
+          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Müstakil Bahçeli Ev">
+          <div class="card-body">
+            <h5 class="card-title">Müstakil Bahçeli Ev</h5>
+            <p class="card-text"><i class="fas fa-map-marker-alt text-primary me-1"></i> Bornova, İzmir</p>
+            <div class="features">
+              <span><i class="fas fa-bed"></i> 3+1</span>
+              <span><i class="fas fa-vector-square"></i> 180 m²</span>
+              <span><i class="fas fa-bath"></i> 2</span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+            <span class="price">₺18.000/ay</span>
+            <div>
+              <button class="btn btn-sm btn-outline-light me-2"><i class="far fa-heart"></i></button>
+              <a href="#" class="btn btn-sm btn-primary">Detaylar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filtreleme ve Arama -->
+<section class="py-5 bg-black">
+  <div class="container">
+    <div class="filter-section" data-aos="fade-up">
+      <div class="row">
+        <div class="col-lg-4">
+          <h5>Detaylı Filtreleme</h5>
+          <p>Tam istediğiniz özelliklerde konut bulun.</p>
+        </div>
+        <div class="col-lg-8">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="filter-group">
+                <h6>Konut Tipi</h6>
+                <div class="filter-options">
+                  <div class="filter-option active">Tümü</div>
+                  <div class="filter-option">Daire</div>
+                  <div class="filter-option">Villa</div>
+                  <div class="filter-option">Stüdyo</div>
+                  <div class="filter-option">Müstakil</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="filter-group">
+                <h6>Oda Sayısı</h6>
+                <div class="filter-options">
+                  <div class="filter-option active">Tümü</div>
+                  <div class="filter-option">1+1</div>
+                  <div class="filter-option">2+1</div>
+                  <div class="filter-option">3+1</div>
+                  <div class="filter-option">4+1+</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="filter-group">
+                <h6>Fiyat Aralığı</h6>
+                <div class="filter-options">
+                  <div class="filter-option active">Tümü</div>
+                  <div class="filter-option">₺0-5.000</div>
+                  <div class="filter-option">₺5-10.000</div>
+                  <div class="filter-option">₺10-20.000</div>
+                  <div class="filter-option">₺20.000+</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="filter-group">
+                <h6>Öne Çıkanlar</h6>
+                <div class="filter-options">
+                  <div class="filter-option active">Tümü</div>
+                  <div class="filter-option">Deniz Manzara</div>
+                  <div class="filter-option">Merkezi</div>
+                  <div class="filter-option">Bahçeli</div>
+                  <div class="filter-option">Havuzlu</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Filtrelenmiş Konutlar -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="property-card">
+          <span class="badge bg-warning text-dark">Kısa Süreli</span>
+          <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Lüks Residence">
+          <div class="card-body">
+            <h5 class="card-title">Lüks Residence</h5>
+            <p class="card-text"><i class="fas fa-map-marker-alt text-primary me-1"></i> Beşiktaş, İstanbul</p>
+            <div class="features">
+              <span><i class="fas fa-bed"></i> 3+1</span>
+              <span><i class="fas fa-vector-square"></i> 150 m²</span>
+              <span><i class="fas fa-bath"></i> 2</span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+            <span class="price">₺22.000/ay</span>
+            <div>
+              <button class="btn btn-sm btn-outline-light me-2"><i class="far fa-heart"></i></button>
+              <a href="#" class="btn btn-sm btn-primary">Detaylar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="property-card">
+          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Stüdyo Daire">
+          <div class="card-body">
+            <h5 class="card-title">Stüdyo Daire</h5>
+            <p class="card-text"><i class="fas fa-map-marker-alt text-primary me-1"></i> Beyoğlu, İstanbul</p>
+            <div class="features">
+              <span><i class="fas fa-bed"></i> 1+0</span>
+              <span><i class="fas fa-vector-square"></i> 45 m²</span>
+              <span><i class="fas fa-bath"></i> 1</span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+            <span class="price">₺6.500/ay</span>
+            <div>
+              <button class="btn btn-sm btn-outline-light me-2"><i class="far fa-heart"></i></button>
+              <a href="#" class="btn btn-sm btn-primary">Detaylar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="property-card">
+          <span class="badge bg-danger">Fırsat</span>
+          <img src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Geniş Aile Evi">
+          <div class="card-body">
+            <h5 class="card-title">Geniş Aile Evi</h5>
+            <p class="card-text"><i class="fas fa-map-marker-alt text-primary me-1"></i> Üsküdar, İstanbul</p>
+            <div class="features">
+              <span><i class="fas fa-bed"></i> 5+2</span>
+              <span><i class="fas fa-vector-square"></i> 320 m²</span>
+              <span><i class="fas fa-bath"></i> 4</span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+            <span class="price">₺35.000/ay</span>
+            <div>
+              <button class="btn btn-sm btn-outline-light me-2"><i class="far fa-heart"></i></button>
+              <a href="#" class="btn btn-sm btn-primary">Detaylar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Nasıl Çalışır -->
+<section id="how-it-works" class="py-5 bg-black">
+  <div class="container">
+    <h2 class="text-light text-center mb-5" data-aos="fade-up">Nasıl Çalışır?</h2>
+    <div class="row g-4 text-light">
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="step">
+          <div class="step-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h4 class="text-center mb-3">1. Ara</h4>
+          <p class="text-center">Konutları detaylı filtrelerle keşfedin. Lokasyon, fiyat aralığı, oda sayısı ve daha birçok kritere göre arama yapabilirsiniz.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="step">
+          <div class="step-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <h4 class="text-center mb-3">2. Randevu Al</h4>
+          <p class="text-center">Beğendiğiniz ev için online randevu oluşturun. Ev sahibiyle doğrudan iletişime geçerek görüşme saatinizi ayarlayın.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="step">
+          <div class="step-icon">
+            <i class="fas fa-file-signature"></i>
+          </div>
+          <h4 class="text-center mb-3">3. Kirala</h4>
+          <p class="text-center">Sözleşmenizi dijital ortamda tamamlayın. Güvenli ödeme yöntemleriyle kolayca kiralama işleminizi gerçekleştirin.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Konut Detay Örneği -->
+<section class="py-5 bg-dark">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-7" data-aos="fade-right">
+        <div class="property-detail-card">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" class="w-100 main-image" alt="Modern Daire">
+          <div class="thumbnails">
+            <img src="https://images.unsplash.com/photo-1583845112203-4540a7f31152?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="thumbnail" alt="Daire Görsel 1">
+            <img src="https://images.unsplash.com/photo-1583845113069-20a7c5c6c0b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="thumbnail" alt="Daire Görsel 2">
+            <img src="https://images.unsplash.com/photo-1583845112203-4540a7f31152?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="thumbnail" alt="Daire Görsel 3">
+            <img src="https://images.unsplash.com/photo-1583845112203-4540a7f31152?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="thumbnail" alt="Daire Görsel 4">
+          </div>
+          <div class="p-4">
+            <h3>Modern Daire - Kadıköy, İstanbul</h3>
+            <p><i class="fas fa-map-marker-alt text-primary me-1"></i> Caferağa Mahallesi, Kadıköy, İstanbul</p>
+            
+            <div class="property-highlights">
+              <div class="property-highlight">
+                <i class="fas fa-bed"></i> 2+1
+              </div>
+              <div class="property-highlight">
+                <i class="fas fa-vector-square"></i> 110 m²
+              </div>
+              <div class="property-highlight">
+                <i class="fas fa-bath"></i> 2 Banyo
+              </div>
+              <div class="property-highlight">
+                <i class="fas fa-building"></i> 5. Kat
+              </div>
+              <div class="property-highlight">
+                <i class="fas fa-calendar-alt"></i> 2018 Yapımı
+              </div>
+            </div>
+            
+            <h5 class="mt-4">Açıklama</h5>
+            <p>Kadıköy'ün merkezinde, tamamen yenilenmiş lüks daire. Deniz manzaralı geniş balkon, amerikan mutfak, parke zemin ve son teknoloji beyaz eşyalar ile donatılmıştır. Ulaşım imkanlarına yakın, alışveriş merkezleri ve restoranlara yürüme mesafesindedir.</p>
+            
+            <h5 class="mt-4">Özellikler</h5>
+            <div class="amenities-list">
+              <div class="amenity-item">
+                <i class="fas fa-wifi"></i> WiFi
+              </div>
+              <div class="amenity-item">
+                <i class="fas fa-tv"></i> TV
+              </div>
+              <div class="amenity-item">
+                <i class="fas fa-utensils"></i> Mutfak
+              </div>
+              <div class="amenity-item">
+                <i class="fas fa-parking"></i> Otopark
+              </div>
+              <div class="amenity-item">
+                <i class="fas fa-snowflake"></i> Klima
+              </div>
+              <div class="amenity-item">
+                <i class="fas fa-dumbbell"></i> Spor Salonu
+              </div>
+              <div class="amenity-item">
+                <i class="fas fa-swimming-pool"></i> Havuz
+              </div>
+              <div class="amenity-item">
+                <i class="fas fa-hot-tub"></i> Jakuzi
+              </div>
+            </div>
+            
+            <div class="map-container">
+              <i class="fas fa-map-marked-alt fa-2x me-2"></i> Harita Yükleniyor...
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5" data-aos="fade-left">
+        <div class="bg-secondary p-4 rounded shadow sticky-top" style="top: 100px;">
+          <h3 class="text-primary">₺12.000 <small class="text-light">/ ay</small></h3>
+          <p class="text-light"><i class="fas fa-map-marker-alt text-primary me-1"></i> Kadıköy, İstanbul</p>
+          
+          <div class="d-flex gap-2 mb-4">
+            <span class="badge bg-primary">Yeni</span>
+            <span class="badge bg-success">Krediye Uygun</span>
+            <span class="badge bg-warning text-dark">Deniz Manzara</span>
+          </div>
+          
+          <form class="mb-4">
+            <div class="mb-3">
+              <label class="form-label">Randevu Tarihi</label>
+              <input type="date" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Randevu Saati</label>
+              <select class="form-control">
+                <option>09:00 - 10:00</option>
+                <option>10:00 - 11:00</option>
+                <option>11:00 - 12:00</option>
+                <option>13:00 - 14:00</option>
+                <option>14:00 - 15:00</option>
+              </select>
+            </div>
+            <button class="btn btn-primary w-100">
+              <i class="fas fa-calendar-check me-2"></i> Randevu Al
+            </button>
+          </form>
+          
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0">İletişim Bilgileri</h6>
+            <button class="btn btn-sm btn-outline-light"><i class="fas fa-phone me-1"></i> Göster</button>
+          </div>
+          
+          <div class="bg-dark p-3 rounded">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas fa-user-circle text-primary me-2"></i>
+              <div>
+                <h6 class="mb-0">Ahmet Yılmaz</h6>
+                <small class="text-light-gray">Ev Sahibi</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-star text-warning me-1"></i>
+              <i class="fas fa-star text-warning me-1"></i>
+              <i class="fas fa-star text-warning me-1"></i>
+              <i class="fas fa-star text-warning me-1"></i>
+              <i class="fas fa-star-half-alt text-warning me-2"></i>
+              <small class="text-light-gray">4.7 (23 değerlendirme)</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Yorumlar -->
+<section id="testimonials" class="py-5 bg-black text-light">
+  <div class="container">
+    <h2 class="text-center mb-5" data-aos="fade-up">Kullanıcı Yorumları</h2>
+    <div class="swiper mySwiper" data-aos="fade-up">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="testimonial-slide">
+            <div class="mb-4">
+              <i class="fas fa-quote-left text-primary fa-2x"></i>
+            </div>
+            <p>"EvKira sayesinde tam istediğim lokasyonda ev buldum. Süreç boyunca müşteri hizmetleri çok yardımcı oldu. Çok memnun kaldım!"</p>
+            <div class="author">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Elif K.">
+              <div class="author-info">
+                <h6>Elif K.</h6>
+                <small>İstanbul</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-slide">
+            <div class="mb-4">
+              <i class="fas fa-quote-left text-primary fa-2x"></i>
+            </div>
+            <p>"Arayüzü kolay, hizmet hızlı. Tüm işlemlerimi online hallettim. Ev sahibiyle doğrudan iletişim kurma imkanı çok iyi oldu."</p>
+            <div class="author">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Barış T.">
+              <div class="author-info">
+                <h6>Barış T.</h6>
+                <small>İzmir</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-slide">
+            <div class="mb-4">
+              <i class="fas fa-quote-left text-primary fa-2x"></i>
+            </div>
+            <p>"Modern görünüm, gerçek ilanlar, kullanıcı dostu sistem. İlan verirken de çok kolaylık sağladılar. Kesinlikle tavsiye ederim."</p>
+            <div class="author">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Derya Y.">
+              <div class="author-info">
+                <h6>Derya Y.</h6>
+                <small>Ankara</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-slide">
+            <div class="mb-4">
+              <i class="fas fa-quote-left text-primary fa-2x"></i>
+            </div>
+            <p>"Yurtdışından taşınırken EvKira çok yardımcı oldu. Uzaktan görüntülü tur imkanı sayesinde evi görmeden kiralayabildim."</p>
+            <div class="author">
+              <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Mehmet S.">
+              <div class="author-info">
+                <h6>Mehmet S.</h6>
+                <small>Bursa</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination mt-3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- İstatistikler -->
+<section class="py-5 bg-dark text-light">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-primary">5.324+</h2>
+        <p>Toplam Konut</p>
+      </div>
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+        <h2 class="text-primary">1.892+</h2>
+        <p>Mutlu Müşteri</p>
+      </div>
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+        <h2 class="text-primary">24+</h2>
+        <p>Şehirde Hizmet</p>
+      </div>
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+        <h2 class="text-primary">98%</h2>
+        <p>Memnuniyet Oranı</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section text-center">
+  <div class="container">
+    <h2 data-aos="fade-up">Evinizi Kiraya Vermek İster Misiniz?</h2>
+    <p data-aos="fade-up" data-aos-delay="100">Binlerce kiracı sizi bekliyor. Profesyonel fotoğraf çekimi ve tanıtım desteği ile evinizi kolayca kiraya verin.</p>
+    <a href="#" class="btn btn-light btn-lg mt-3 px-4 py-2 rounded-pill" data-aos="fade-up" data-aos-delay="200" data-bs-toggle="modal" data-bs-target="#propertyModal">
+      <i class="fas fa-plus-circle me-2"></i> Ücretsiz İlan Ver
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="iletisim">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-links">
+          <h5><i class="fas fa-home me-2"></i> EvKira</h5>
+          <p>Modern, hızlı ve güvenilir ev kiralama deneyimi. Hayalinizdeki evi bulmanız için buradayız.</p>
+          <div class="social-links mt-3">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <div class="footer-links">
+          <h5>Bağlantılar</h5>
+          <ul>
+            <li><a href="#">Ana Sayfa</a></li>
+            <li><a href="#featured">Konutlar</a></li>
+            <li><a href="#how-it-works">Nasıl Çalışır?</a></li>
+            <li><a href="#testimonials">Yorumlar</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <div class="footer-links">
+          <h5>Hizmetler</h5>
+          <ul>
+            <li><a href="#">Kiralık Konutlar</a></li>
+            <li><a href="#">Satılık Konutlar</a></li>
+            <li><a href="#">Günlük Kiralık</a></li>
+            <li><a href="#">Emlak Danışmanlığı</a></li>
+            <li><a href="#">Sigorta Hizmetleri</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4">
+        <div class="footer-links">
+          <h5>İletişim</h5>
+          <div class="footer-contact">
+            <p><i class="fas fa-map-marker-alt"></i> Levent, İstanbul</p>
+            <p><i class="fas fa-phone"></i> +90 212 000 00 00</p>
+            <p><i class="fas fa-envelope"></i> info@evkira.com</p>
+            <p><i class="fas fa-clock"></i> Pazartesi - Cumartesi: 09:00 - 18:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="mt-4 border-secondary" />
+    <div class="row">
+      <div class="col-md-6">
+        <p class="small mb-0">&copy; 2025 EvKira. Tüm hakları saklıdır.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="small">
+          <a href="#" class="text-light me-3">Gizlilik Politikası</a>
+          <a href="#" class="text-light me-3">Kullanım Şartları</a>
+          <a href="#" class="text-light">Çerez Politikası</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<div class="back-to-top">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<!-- Giriş Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">Giriş Yap</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">E-posta</label>
+            <input type="email" class="form-control" placeholder="ornek@mail.com" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Şifre</label>
+            <input type="password" class="form-control" placeholder="********" />
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Beni Hatırla</label>
+          </div>
+          <button class="btn btn-primary w-100 mb-3">Giriş Yap</button>
+          <div class="text-center">
+            <a href="#" class="text-primary">Şifremi Unuttum?</a>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <p class="mb-0">Hesabınız yok mu? <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Kayıt Olun</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Kayıt Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">Kayıt Ol</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row g-2">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Ad</label>
+              <input type="text" class="form-control" placeholder="Adınız" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Soyad</label>
+              <input type="text" class="form-control" placeholder="Soyadınız" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">E-posta</label>
+            <input type="email" class="form-control" placeholder="ornek@mail.com" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telefon</label>
+            <input type="tel" class="form-control" placeholder="5__ ___ __ __" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Şifre</label>
+            <input type="password" class="form-control" placeholder="********" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Şifre Tekrar</label>
+            <input type="password" class="form-control" placeholder="********" />
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="terms">
+            <label class="form-check-label" for="terms"><a href="#" class="text-primary">Kullanım koşullarını</a> okudum ve kabul ediyorum.</label>
+          </div>
+          <button class="btn btn-primary w-100">Kayıt Ol</button>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <p class="mb-0">Zaten hesabınız var mı? <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Giriş Yapın</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- İlan Verme Modal -->
+<div class="modal fade" id="propertyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">İlan Ver</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">İlan Başlığı</label>
+            <input type="text" class="form-control" placeholder="Örn: Kadıköy'de Deniz Manzaralı Lüks Daire" />
+          </div>
+          
+          <div class="row g-2">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Konut Tipi</label>
+              <select class="form-control">
+                <option>Seçiniz</option>
+                <option>Daire</option>
+                <option>Villa</option>
+                <option>Stüdyo</option>
+                <option>Müstakil Ev</option>
+                <option>Residence</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Oda Sayısı</label>
+              <select class="form-control">
+                <option>Seçiniz</option>
+                <option>1+0</option>
+                <option>1+1</option>
+                <option>2+1</option>
+                <option>3+1</option>
+                <option>4+1</option>
+                <option>5+1 ve üzeri</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row g-2">
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Metrekare</label>
+              <input type="number" class="form-control" placeholder="m²" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Bina Yaşı</label>
+              <input type="number" class="form-control" placeholder="Yıl" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Bulunduğu Kat</label>
+              <input type="number" class="form-control" placeholder="Kat" />
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Adres</label>
+            <textarea class="form-control" rows="2" placeholder="Tam adres bilgisi"></textarea>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Açıklama</label>
+            <textarea class="form-control" rows="4" placeholder="Konutunuzu detaylı şekilde tanıtın"></textarea>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Fiyat (₺)</label>
+            <input type="number" class="form-control" placeholder="Aylık kira bedeli" />
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Fotoğraflar</label>
+            <div class="border rounded p-3 text-center">
+              <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-2"></i>
+              <p>Fotoğrafları sürükleyip bırakın veya <a href="#" class="text-primary">göz atın</a></p>
+              <small class="text-light-gray">En az 5 fotoğraf yükleyin (max 10MB each)</small>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Öne Çıkan Özellikler</label>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="wifi">
+                  <label class="form-check-label" for="wifi">WiFi</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="parking">
+                  <label class="form-check-label" for="parking">Otopark</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="pool">
+                  <label class="form-check-label" for="pool">Havuz</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="ac">
+                  <label class="form-check-label" for="ac">Klima</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="heating">
+                  <label class="form-check-label" for="heating">Merkezi Isıtma</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="elevator">
+                  <label class="form-check-label" for="elevator">Asansör</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button class="btn btn-primary w-100 py-2">
+            <i class="fas fa-paper-plane me-2"></i> İlanı Yayınla
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scriptler -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.4.1/swiper-bundle.min.js"></script>
+<script>
+  // AOS Animasyon
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true
+  });
+
+  // Swiper Slider
+  const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    }
+  });
+
+  // Navbar Scroll Efekti
+  window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Back to Top Butonu
+  const backToTopButton = document.querySelector('.back-to-top');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) {
+      backToTopButton.classList.add('active');
+    } else {
+      backToTopButton.classList.remove('active');
+    }
+  });
+  
+  backToTopButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  // Filtreleme Butonları
+  const filterOptions = document.querySelectorAll('.filter-option');
+  filterOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      filterOptions.forEach(opt => opt.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Thumbnail Click
+  const thumbnails = document.querySelectorAll('.thumbnail');
+  const mainImage = document.querySelector('.main-image');
+  
+  thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', function() {
+      thumbnails.forEach(t => t.style.opacity = '0.7');
+      this.style.opacity = '1';
+      mainImage.src = this.src.replace('200', '1600');
+    });
+  });
+
+  // Modal geçişleri
+  const loginModal = document.getElementById('loginModal');
+  const registerModal = document.getElementById('registerModal');
+  
+  if (loginModal && registerModal) {
+    loginModal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      if (button && button.getAttribute('data-bs-target') === '#registerModal') {
+        setTimeout(() => {
+          registerModal.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          const modalBackdrop = document.querySelector('.modal-backdrop');
+          if (modalBackdrop) modalBackdrop.remove();
+        }, 10);
+      }
+    });
+    
+    registerModal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      if (button && button.getAttribute('data-bs-target') === '#loginModal') {
+        setTimeout(() => {
+          loginModal.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          const modalBackdrop = document.querySelector('.modal-backdrop');
+          if (modalBackdrop) modalBackdrop.remove();
+        }, 10);
+      }
+    });
+  }
+
+  // Arama formu submit işlemi
+  const searchForm = document.querySelector('.search-box form');
+  if (searchForm) {
+    searchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Burada arama işlemleri yapılabilir
+      alert('Arama işlemi gerçekleştirildi!');
+    });
+  }
+
+  // Favori butonları
+  const favoriteButtons = document.querySelectorAll('.btn-outline-light .far.fa-heart');
+  favoriteButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      this.classList.toggle('fas');
+      this.classList.toggle('far');
+      this.classList.toggle('text-danger');
+    });
+  });
+
+  // Telefon numarası göster/gizle
+  const showPhoneBtn = document.querySelector('.btn-outline-light .fa-phone');
+  if (showPhoneBtn) {
+    showPhoneBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const phoneNumber = document.createElement('span');
+      phoneNumber.textContent = ' +90 555 123 45 67';
+      this.parentNode.replaceChild(phoneNumber, this);
+    });
+  }
+
+  // İlan verme formu
+  const propertyForm = document.querySelector('#propertyModal form');
+  if (propertyForm) {
+    propertyForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Burada ilan gönderme işlemleri yapılabilir
+      alert('İlanınız başarıyla gönderildi!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('propertyModal'));
+      modal.hide();
+    });
+  }
+
+  // Kullanıcı giriş formu
+  const loginForm = document.querySelector('#loginModal form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Burada giriş işlemleri yapılabilir
+      alert('Giriş başarılı!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+      modal.hide();
+    });
+  }
+
+  // Kayıt formu
+  const registerForm = document.querySelector('#registerModal form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Burada kayıt işlemleri yapılabilir
+      alert('Kayıt başarılı! Giriş yapabilirsiniz.');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+      modal.hide();
+    });
+  }
+</script>
+</body>
+</html>
