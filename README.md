@@ -46,15 +46,6 @@ This project is built as a **frontend-first prototype**, with future plans for f
 
 ---
 
-## 📸 Preview
-
-<p align="center">
-  <img src="preview.png" width="900"/>
-</p>
-
----
-
-
 
 ## 📦 Installation
 
